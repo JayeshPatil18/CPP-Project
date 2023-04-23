@@ -74,12 +74,16 @@ class TweetPageState extends State<TweetPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        elevation: appBarElevation,
-        backgroundColor: Colors.white,
-        title: Text(
-          'Tweet',
-          style: TextStyle(color: Colors.black),
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(60.0),
+        child: AppBar(
+          elevation: appBarElevation,
+          backgroundColor: Colors.white,
+          title: Text(
+            'Tweet',
+            style: TextStyle(color: Colors.black),
+            textAlign: TextAlign.center,
+          ),
         ),
       ),
       backgroundColor: Colors.white,

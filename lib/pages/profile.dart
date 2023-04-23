@@ -187,46 +187,53 @@ class ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        elevation: appBarElevation,
-        backgroundColor: Colors.white,
-        title: Text(
-          'My Profile',
-          style: TextStyle(color: Colors.black),
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(60.0),
+        child: AppBar(
+          automaticallyImplyLeading: false,
+          elevation: appBarElevation,
+          backgroundColor: Colors.white,
+          title: Padding(
+            padding: const EdgeInsets.all(4.0),
+            child: Text(
+              'My Profile',
+              style: TextStyle(color: Colors.black),
+              textAlign: TextAlign.center,
+            ),
+          ),
+          actions: <Widget>[
+            Builder(builder: (context) {
+              return Row(
+                children: [
+                  IconButton(
+                    icon: Icon(
+                      Icons.refresh,
+                    ),
+                    onPressed: () {
+                      _refresh();
+                    },
+                  ),
+                  IconButton(
+                    icon: Icon(
+                      Icons.add_comment_rounded,
+                    ),
+                    onPressed: () {
+                      showDialogAsk(context);
+                    },
+                  ),
+                  IconButton(
+                    icon: Icon(
+                      Icons.settings,
+                    ),
+                    onPressed: () {
+                      Scaffold.of(context).openEndDrawer();
+                    },
+                  ),
+                ],
+              );
+            })
+          ],
         ),
-        actions: <Widget>[
-          Builder(builder: (context) {
-            return Row(
-              children: [
-                IconButton(
-                  icon: Icon(
-                    Icons.refresh,
-                  ),
-                  onPressed: () {
-                    _refresh();
-                  },
-                ),
-                IconButton(
-                  icon: Icon(
-                    Icons.add_comment_rounded,
-                  ),
-                  onPressed: () {
-                    showDialogAsk(context);
-                  },
-                ),
-                IconButton(
-                  icon: Icon(
-                    Icons.settings,
-                  ),
-                  onPressed: () {
-                    Scaffold.of(context).openEndDrawer();
-                  },
-                ),
-              ],
-            );
-          })
-        ],
       ),
       endDrawer: Drawer(
         backgroundColor: Colors.white,

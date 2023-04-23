@@ -152,9 +152,7 @@ class _MyHomePageState extends State<MyHomePage> {
   int tabIndex = 0;
 
   final screens = [
-    HomePage(),
     DiscussionPage(),
-    MyGamePage(),
     RanksPage(),
     ProfilePage(),
   ];
@@ -162,76 +160,90 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     final appBars = [
-      AppBar(
-        elevation: appBarElevation,
-        backgroundColor: Colors.white,
-        title: Text(
-          'Home',
-          style: TextStyle(color: Colors.black),
-        ),
-        // actions: <Widget>[
-        //   IconButton(
-        //     icon: Icon(
-        //       Icons.calculate,
-        //     ),
-        //     onPressed: () {
-        //       // do something
-        //     },
-        //   )
-        // ],
-      ),
-      AppBar(
-        elevation: appBarElevation,
-        backgroundColor: Colors.white,
-        title: Text(
-          'Discussion',
-          style: TextStyle(color: Colors.black),
-        ),
-      ),
-      AppBar(
-        elevation: 0.0,
-        backgroundColor: Colors.white,
-        title: Text(
-          'My Games',
-          style: TextStyle(color: Colors.black),
-        ),
-      ),
-      AppBar(
-        elevation: appBarElevation,
-        backgroundColor: Colors.white,
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              'Leaderboard',
+      PreferredSize(
+        preferredSize: Size.fromHeight(60.0),
+        child: AppBar(
+          elevation: appBarElevation,
+          backgroundColor: Colors.white,
+          title: Padding(
+            padding: const EdgeInsets.all(4.0),
+            child: Text(
+              'Stock HIVE',
+              textAlign: TextAlign.center,
               style: TextStyle(color: Colors.black),
             ),
-            InkWell(
-              onTap: () async{
-                RanksPageState.scrollToIndex(scrollIndex); // Scrolling Index for My Rank
-              },
-              child: Container(
-                decoration: BoxDecoration(
-                    color: Colors.black,
-                    borderRadius: BorderRadius.circular(20)),
-                padding: EdgeInsets.only(top: 5, bottom: 5, right: 10, left: 4),
-                child: Row(
-                  children: [
-                    Icon(
-                      Icons.keyboard_arrow_down,
-                      color: Colors.white,
-                      size: 25,
-                    ),
-                    Text(
-                      'My Rank',
-                      style: TextStyle(color: Colors.white, fontSize: 14),
-                      textAlign: TextAlign.start,
-                    ),
-                  ],
+          ),
+          // actions: <Widget>[
+          //   IconButton(
+          //     icon: Icon(
+          //       Icons.calculate,
+          //     ),
+          //     onPressed: () {
+          //       // do something
+          //     },
+          //   )
+          // ],
+        ),
+      ),
+      // AppBar(
+      //   elevation: appBarElevation,
+      //   backgroundColor: Colors.white,
+      //   title: Text(
+      //     'Discussion',
+      //     style: TextStyle(color: Colors.black),
+      //   ),
+      // ),
+      // AppBar(
+      //   elevation: 0.0,
+      //   backgroundColor: Colors.white,
+      //   title: Text(
+      //     'My Games',
+      //     style: TextStyle(color: Colors.black),
+      //   ),
+      // ),
+      PreferredSize(
+        preferredSize: Size.fromHeight(60.0),
+        child: AppBar(
+          elevation: appBarElevation,
+          backgroundColor: Colors.white,
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(4.0),
+                child: Text(
+                  'Leaderboard',
+                  style: TextStyle(color: Colors.black),
+                  textAlign: TextAlign.center,
                 ),
               ),
-            )
-          ],
+              InkWell(
+                onTap: () async{
+                  RanksPageState.scrollToIndex(scrollIndex); // Scrolling Index for My Rank
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                      color: Colors.black,
+                      borderRadius: BorderRadius.circular(20)),
+                  padding: EdgeInsets.only(top: 5, bottom: 5, right: 10, left: 4),
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.keyboard_arrow_down,
+                        color: Colors.white,
+                        size: 25,
+                      ),
+                      Text(
+                        'My Rank',
+                        style: TextStyle(color: Colors.white, fontSize: 14),
+                        textAlign: TextAlign.start,
+                      ),
+                    ],
+                  ),
+                ),
+              )
+            ],
+          ),
         ),
       ),
       null,
@@ -295,14 +307,14 @@ class _MyHomePageState extends State<MyHomePage> {
             icon: Icon(Icons.home),
             label: 'Home',
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.chat),
-            label: 'Discussion',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.emoji_events),
-            label: 'Games',
-          ),
+          // BottomNavigationBarItem(
+          //   icon: Icon(Icons.chat),
+          //   label: 'Discussion',
+          // ),
+          // BottomNavigationBarItem(
+          //   icon: Icon(Icons.emoji_events),
+          //   label: 'Games',
+          // ),
           BottomNavigationBarItem(
             icon: ImageIcon(
               AssetImage('assets/icons/rank2.png'),

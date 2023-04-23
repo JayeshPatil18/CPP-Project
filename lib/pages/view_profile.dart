@@ -46,25 +46,29 @@ class _ViewProfileState extends State<ViewProfile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        elevation: appBarElevation,
-        backgroundColor: Colors.white,
-        title: Text(
-          'Profile',
-          style: TextStyle(color: Colors.black),
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(60.0),
+        child: AppBar(
+          elevation: appBarElevation,
+          backgroundColor: Colors.white,
+          title: Text(
+            'Profile',
+            style: TextStyle(color: Colors.black),
+            textAlign: TextAlign.center,
+          ),
+          actions: <Widget>[
+            Builder(builder: (context) {
+              return IconButton(
+                icon: Icon(
+                  Icons.refresh,
+                ),
+                onPressed: () {
+                  _refresh();
+                },
+              );
+            })
+          ],
         ),
-        actions: <Widget>[
-          Builder(builder: (context) {
-            return IconButton(
-              icon: Icon(
-                Icons.refresh,
-              ),
-              onPressed: () {
-                _refresh();
-              },
-            );
-          })
-        ],
       ),
       backgroundColor: Colors.transparent,
       body: DefaultTabController(
