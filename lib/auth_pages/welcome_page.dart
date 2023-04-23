@@ -65,59 +65,66 @@ class _WelcomePageState extends State<WelcomePage> {
         body: Center(
           child: Column(
       children: [
+
+        Container(
+          height: 340,
+          margin: EdgeInsets.only(top: 80, bottom: 10),
+        child: Lottie.asset('assets/anim/wel_page.json'),
+        ),
+
+        // Container(
+          //     height: 340,
+          //     margin: EdgeInsets.only(top: 40, bottom: 40),
+          //     child: ListView(
+          //       children: [
+          //         CarouselSlider(
+          //           items: [
+          //             //1st Image of Slider
+          //             sections[0],
+          //
+          //             //2nd Image of Slider
+          //             sections[1],
+          //
+          //             //3rd Image of Slider
+          //             sections[2],
+          //           ],
+          //
+          //           //Slider Container properties
+          //           options: CarouselOptions(
+          //             height: 300.0,
+          //             enlargeCenterPage: true,
+          //             autoPlay: true,
+          //             aspectRatio: 16 / 9,
+          //             autoPlayCurve: Curves.fastOutSlowIn,
+          //             enableInfiniteScroll: true,
+          //             autoPlayAnimationDuration: Duration(milliseconds: 800),
+          //             viewportFraction: 0.8,
+          //             onPageChanged: (index, reason) {
+          //               setState(() {
+          //                 currentIndex = index;
+          //               });
+          //             },
+          //           ),
+          //         ),
+          //       ],
+          //     )),
+          // Row(
+          //   mainAxisAlignment: MainAxisAlignment.center,
+          //   children: sections.map((section) {
+          //     return Container(
+          //       width: 10,
+          //       height: 10,
+          //       margin: EdgeInsets.symmetric(horizontal: 4),
+          //       decoration: BoxDecoration(
+          //           shape: BoxShape.circle,
+          //           color: currentIndex == sections.indexOf(section)
+          //               ? Colors.black
+          //               : Color(0xffeaeaea)),
+          //     );
+          //   }).toList(),
+          // ),
           Container(
-              height: 340,
-              margin: EdgeInsets.only(top: 40, bottom: 40),
-              child: ListView(
-                children: [
-                  CarouselSlider(
-                    items: [
-                      //1st Image of Slider
-                      sections[0],
-
-                      //2nd Image of Slider
-                      sections[1],
-
-                      //3rd Image of Slider
-                      sections[2],
-                    ],
-
-                    //Slider Container properties
-                    options: CarouselOptions(
-                      height: 300.0,
-                      enlargeCenterPage: true,
-                      autoPlay: true,
-                      aspectRatio: 16 / 9,
-                      autoPlayCurve: Curves.fastOutSlowIn,
-                      enableInfiniteScroll: true,
-                      autoPlayAnimationDuration: Duration(milliseconds: 800),
-                      viewportFraction: 0.8,
-                      onPageChanged: (index, reason) {
-                        setState(() {
-                          currentIndex = index;
-                        });
-                      },
-                    ),
-                  ),
-                ],
-              )),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: sections.map((section) {
-              return Container(
-                width: 10,
-                height: 10,
-                margin: EdgeInsets.symmetric(horizontal: 4),
-                decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: currentIndex == sections.indexOf(section)
-                        ? Colors.black
-                        : Color(0xffeaeaea)),
-              );
-            }).toList(),
-          ),
-          Container(
-              margin: EdgeInsets.only(top: 70),
+              margin: EdgeInsets.only(top: 60),
               child: Text('Welcome', style: textBig())),
 
           Container(
