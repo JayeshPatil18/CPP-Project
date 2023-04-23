@@ -276,59 +276,69 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       backgroundColor: defaultBgColor(),
       appBar: appBars[tabIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        onTap: (index) {
-          setState(() {
-            pageIndex = index;
-            switch (pageIndex) {
-              case 0:
-                tabIndex = 0;
-                break;
-              case 1:
-                tabIndex = 1;
-                break;
-              case 2:
-                tabIndex = 2;
-                break;
-              case 3:
-                tabIndex = 3;
-                break;
-              case 4:
-                tabIndex = 4;
-                break;
-              default:
-                tabIndex = 0;
-            }
-          });
-        },
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          // BottomNavigationBarItem(
-          //   icon: Icon(Icons.chat),
-          //   label: 'Discussion',
-          // ),
-          // BottomNavigationBarItem(
-          //   icon: Icon(Icons.emoji_events),
-          //   label: 'Games',
-          // ),
-          BottomNavigationBarItem(
-            icon: ImageIcon(
-              AssetImage('assets/icons/rank2.png'),
-              size: 28,
+      bottomNavigationBar: Container(
+        margin: EdgeInsets.only(bottom: 16, right: 10, left: 10),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(8.0),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.3),
+              spreadRadius: 1,
+              blurRadius: 5,
+              offset: Offset(0, 3),
             ),
-            label: 'Rank',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profile',
-          ),
-        ],
-        currentIndex: pageIndex,
-        selectedItemColor: defaultColorTabSe(),
+          ],
+        ),
+        child: BottomNavigationBar(
+          type: BottomNavigationBarType.fixed,
+          onTap: (index) {
+            setState(() {
+              pageIndex = index;
+              switch (pageIndex) {
+                case 0:
+                  tabIndex = 0;
+                  break;
+                case 1:
+                  tabIndex = 1;
+                  break;
+                case 2:
+                  tabIndex = 2;
+                  break;
+                case 3:
+                  tabIndex = 3;
+                  break;
+                case 4:
+                  tabIndex = 4;
+                  break;
+                default:
+                  tabIndex = 0;
+              }
+            });
+          },
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: 'Home',
+            ),
+            BottomNavigationBarItem(
+              icon: ImageIcon(
+                AssetImage('assets/icons/rank2.png'),
+                size: 28,
+              ),
+              label: 'Rank',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.person),
+              label: 'Profile',
+            ),
+          ],
+          currentIndex: pageIndex,
+          selectedItemColor: defaultColorTabSe(),
+          unselectedItemColor: Colors.grey,
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+        ),
       ),
       body: Container(color: defaultBgColor(), child: screens[pageIndex]),
     );

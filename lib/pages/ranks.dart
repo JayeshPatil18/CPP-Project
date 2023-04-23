@@ -44,6 +44,7 @@ class RanksPageState extends State<RanksPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: defaultBgColor(),
       body: FutureBuilder(
         future: getUsers(),
         builder: (context, snapshot){
@@ -51,7 +52,7 @@ class RanksPageState extends State<RanksPage> {
             return const Center(child: CircularProgressIndicator());
           }else{
             return ScrollablePositionedList.builder(
-                padding: EdgeInsets.all(4),
+                padding: EdgeInsets.all(10),
                 itemScrollController: itemController,
                 itemCount: usersList.length,
                 itemBuilder: (context, index) {
@@ -134,7 +135,7 @@ class RanksPageState extends State<RanksPage> {
                           ],
                         ),
                         contentPadding:
-                        EdgeInsets.only(top: 5, bottom: 5, left: 10, right: 10),
+                        EdgeInsets.only(top: 10, bottom: 10, left: 10, right: 10),
                         onTap: () {
                           Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) => ViewProfile(userId: user.uId)));

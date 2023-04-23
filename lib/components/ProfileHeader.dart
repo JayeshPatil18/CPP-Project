@@ -294,8 +294,8 @@ class ProfileHeaderState extends State<ProfileHeader> {
                                   begin: Alignment.topLeft,
                                   end: Alignment.bottomRight,
                                   colors: [
-                                    Colors.black,
-                                    Colors.grey,
+                                    defaultBgColor(),
+                                    Colors.white,
                                   ],
                                 ),
                               ),
@@ -312,14 +312,14 @@ class ProfileHeaderState extends State<ProfileHeader> {
                                           Icon(
                                             Icons.card_giftcard,
                                             size: 16,
-                                            color: Colors.white,
+                                            color: Colors.black,
                                           ),
                                           Container(
                                             margin: EdgeInsets.only(left: 4),
                                             child: Text(
                                               'Points',
                                               style: textStyleSubTitle(
-                                                  textColor: Colors.white),
+                                                  textColor: Colors.black),
                                             ),
                                           ),
                                         ],
@@ -330,7 +330,7 @@ class ProfileHeaderState extends State<ProfileHeader> {
                                       Text(
                                         '${user.uPoints}',
                                         style: textStyleDefault(
-                                            textColor: Colors.white),
+                                            textColor: Colors.black),
                                       ),
                                     ],
                                   ),
@@ -383,8 +383,8 @@ class ProfileHeaderState extends State<ProfileHeader> {
                                   begin: Alignment.topLeft,
                                   end: Alignment.bottomRight,
                                   colors: [
-                                    Colors.black,
-                                    Colors.grey,
+                                    defaultBgColor(),
+                                    Colors.white,
                                   ],
                                 ),
                               ),
@@ -401,14 +401,14 @@ class ProfileHeaderState extends State<ProfileHeader> {
                                           Icon(
                                             Icons.leaderboard_outlined,
                                             size: 16,
-                                            color: Colors.white,
+                                            color: Colors.black,
                                           ),
                                           Container(
                                             margin: EdgeInsets.only(left: 4),
                                             child: Text(
                                               'Rank',
                                               style: textStyleSubTitle(
-                                                  textColor: Colors.white),
+                                                  textColor: Colors.black),
                                             ),
                                           ),
                                         ],
@@ -419,12 +419,12 @@ class ProfileHeaderState extends State<ProfileHeader> {
                                       Text(
                                         '#',
                                         style: textStyleDefault(
-                                            textColor: Colors.white),
+                                            textColor: Colors.black),
                                       ),
                                       Text(
                                         '${user.uRank}',
                                         style: textStyleDefault(
-                                            textColor: Colors.white),
+                                            textColor: Colors.black),
                                       ),
                                     ],
                                   ),
