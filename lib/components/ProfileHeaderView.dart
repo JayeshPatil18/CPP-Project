@@ -138,67 +138,78 @@ class ProfileHeaderViewState extends State<ProfileHeaderView> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
+                      // Expanded(
+                      //   child: Card(
+                      //     shape: RoundedRectangleBorder(
+                      //       borderRadius: BorderRadius.circular(12.0),
+                      //     ),
+                      //     elevation: 4,
+                      //     margin: EdgeInsets.only(left: 10, right: 5),
+                      //     color: Colors.white,
+                      //     child: Container(
+                      //       padding: EdgeInsets.all(8),
+                      //       child: Column(
+                      //         crossAxisAlignment: CrossAxisAlignment.center,
+                      //         children: [
+                      //           Container(
+                      //               margin: EdgeInsets.only(bottom: 4),
+                      //               child: Row(
+                      //                 mainAxisAlignment:
+                      //                     MainAxisAlignment.center,
+                      //                 children: [
+                      //                   Icon(
+                      //                     Icons.account_balance_wallet_outlined,
+                      //                     size: 16,
+                      //                   ),
+                      //                   Container(
+                      //                     margin: EdgeInsets.only(left: 4),
+                      //                     child: Text(
+                      //                       'Revenue',
+                      //                       style: textStyleSubTitle(
+                      //                           textColor: Colors.black),
+                      //                     ),
+                      //                   ),
+                      //                 ],
+                      //               )),
+                      //           Row(
+                      //             mainAxisAlignment: MainAxisAlignment.center,
+                      //             children: [
+                      //               Text(
+                      //                 '${user.uRevenue}',
+                      //                 style: textStyleDefault(
+                      //                     textColor: Colors.black),
+                      //               ),
+                      //               Icon(
+                      //                 Icons.currency_rupee,
+                      //                 color: Colors.black,
+                      //               )
+                      //             ],
+                      //           ),
+                      //         ],
+                      //       ),
+                      //     ),
+                      //   ),
+                      // ),
                       Expanded(
                         child: Card(
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12.0),
                           ),
                           elevation: 4,
-                          margin: EdgeInsets.only(left: 10, right: 5),
+                          margin: EdgeInsets.only(left: 20, right: 10),
                           color: Colors.white,
                           child: Container(
-                            padding: EdgeInsets.all(8),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Container(
-                                    margin: EdgeInsets.only(bottom: 4),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Icon(
-                                          Icons.account_balance_wallet_outlined,
-                                          size: 16,
-                                        ),
-                                        Container(
-                                          margin: EdgeInsets.only(left: 4),
-                                          child: Text(
-                                            'Revenue',
-                                            style: textStyleSubTitle(
-                                                textColor: Colors.black),
-                                          ),
-                                        ),
-                                      ],
-                                    )),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      '${user.uRevenue}',
-                                      style: textStyleDefault(
-                                          textColor: Colors.black),
-                                    ),
-                                    Icon(
-                                      Icons.currency_rupee,
-                                      color: Colors.black,
-                                    )
-                                  ],
-                                ),
-                              ],
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12.0),
+                              gradient: LinearGradient(
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                                colors: [
+                                  Colors.black,
+                                  Colors.grey,
+                                ],
+                              ),
                             ),
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        child: Card(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12.0),
-                          ),
-                          elevation: 4,
-                          margin: EdgeInsets.only(left: 5, right: 5),
-                          color: Colors.white,
-                          child: Container(
                             padding: EdgeInsets.all(8),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.center,
@@ -212,13 +223,14 @@ class ProfileHeaderViewState extends State<ProfileHeaderView> {
                                         Icon(
                                           Icons.card_giftcard,
                                           size: 16,
+                                          color: Colors.white,
                                         ),
                                         Container(
                                           margin: EdgeInsets.only(left: 4),
                                           child: Text(
                                             'Points',
                                             style: textStyleSubTitle(
-                                                textColor: Colors.black),
+                                                textColor: Colors.white),
                                           ),
                                         ),
                                       ],
@@ -229,7 +241,7 @@ class ProfileHeaderViewState extends State<ProfileHeaderView> {
                                     Text(
                                       '${user.uPoints}',
                                       style: textStyleDefault(
-                                          textColor: Colors.black),
+                                          textColor: Colors.white),
                                     ),
                                   ],
                                 ),
@@ -244,9 +256,20 @@ class ProfileHeaderViewState extends State<ProfileHeaderView> {
                             borderRadius: BorderRadius.circular(12.0),
                           ),
                           elevation: 4,
-                          margin: EdgeInsets.only(left: 5, right: 10),
+                          margin: EdgeInsets.only(left: 10, right: 20),
                           color: Colors.white,
                           child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12.0),
+                              gradient: LinearGradient(
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                                colors: [
+                                  Colors.black,
+                                  Colors.grey,
+                                ],
+                              ),
+                            ),
                             padding: EdgeInsets.all(8),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.center,
@@ -260,13 +283,14 @@ class ProfileHeaderViewState extends State<ProfileHeaderView> {
                                         Icon(
                                           Icons.leaderboard_outlined,
                                           size: 16,
+                                          color: Colors.white,
                                         ),
                                         Container(
                                           margin: EdgeInsets.only(left: 4),
                                           child: Text(
                                             'Rank',
                                             style: textStyleSubTitle(
-                                                textColor: Colors.black),
+                                                textColor: Colors.white),
                                           ),
                                         ),
                                       ],
@@ -277,12 +301,12 @@ class ProfileHeaderViewState extends State<ProfileHeaderView> {
                                     Text(
                                       '#',
                                       style: textStyleDefault(
-                                          textColor: Colors.black),
+                                          textColor: Colors.white),
                                     ),
                                     Text(
                                       '${user.uRank}',
                                       style: textStyleDefault(
-                                          textColor: Colors.black),
+                                          textColor: Colors.white),
                                     ),
                                   ],
                                 ),

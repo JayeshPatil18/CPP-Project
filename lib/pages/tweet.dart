@@ -80,7 +80,7 @@ class TweetPageState extends State<TweetPage> {
           elevation: appBarElevation,
           backgroundColor: Colors.white,
           title: Text(
-            'Tweet',
+            'Post',
             style: TextStyle(color: Colors.black),
             textAlign: TextAlign.center,
           ),

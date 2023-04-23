@@ -110,8 +110,8 @@ class _ViewProfileState extends State<ViewProfile> {
                             labelColor: Colors.white,
                             unselectedLabelColor: Colors.black,
                             tabs: [
-                              Tab(text: "Tweets",),
-                              Tab(text: "Replies",),
+                              Tab(text: "Post",),
+                              Tab(text: "Comments",),
                               Tab(text: "Likes",),
                             ]),
                       ),
