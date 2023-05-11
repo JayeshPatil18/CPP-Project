@@ -5,7 +5,7 @@ TextStyle textStyleDefault({Color textColor = Colors.black}){
 }
 
 TextStyle textStyleMinDesc(){
-  return TextStyle(fontSize: 12 );
+  return TextStyle(fontSize: 14 );
 }
 
 TextStyle textStyleMinDescBold(){
@@ -29,7 +29,7 @@ TextStyle textStylePercent(){
 }
 
 TextStyle textStyleLeader({Color textColor = Colors.black}){
-  return TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: textColor);
+  return TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: textColor);
 }
 
 TextStyle textBig({Color textColor = Colors.black}){

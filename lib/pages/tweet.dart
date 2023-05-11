@@ -234,6 +234,7 @@ class TweetPageState extends State<TweetPage> {
   }
 
   Future<List<TweetsModel>> getTweet(int t_id) async{
+    userId = await getTokenId();
     final response =
     await http.get(Uri.parse('$globalApiUrl/tweets/tweet?userId=${userId}&t_id=${t_id}'));
     var data = jsonDecode(response.body);

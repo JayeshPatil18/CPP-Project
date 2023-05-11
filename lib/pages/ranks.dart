@@ -52,7 +52,7 @@ class RanksPageState extends State<RanksPage> {
             return const Center(child: CircularProgressIndicator());
           }else{
             return ScrollablePositionedList.builder(
-                padding: EdgeInsets.all(10),
+                padding: EdgeInsets.only(top: 6, bottom: 7, left: 4, right: 4),
                 itemScrollController: itemController,
                 itemCount: usersList.length,
                 itemBuilder: (context, index) {
@@ -73,6 +73,7 @@ class RanksPageState extends State<RanksPage> {
                       elevation: 0.0,
                       child: ListTile(
                         leading: Container(
+                          margin: const EdgeInsets.only(left: 4),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
@@ -110,18 +111,22 @@ class RanksPageState extends State<RanksPage> {
                               ),
                             ),
                             Flexible(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    user.uFullname.toString(),
-                                    style: textStyleLeader(),
-                                  ),
-                                  Text(
-                                    user.username.toString(),
-                                    style: textStyleMinDesc(),
-                                  ),
-                                ],
+                              child: Container(
+                                margin: const EdgeInsets.only(left: 4),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      user.uFullname.toString(),
+                                      style: textStyleLeader(),
+                                    ),
+                                    SizedBox(width: double.infinity, height: 4),
+                                    Text(
+                                      user.username.toString(),
+                                      style: textStyleMinDesc(),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ],
@@ -135,7 +140,7 @@ class RanksPageState extends State<RanksPage> {
                           ],
                         ),
                         contentPadding:
-                        EdgeInsets.only(top: 10, bottom: 10, left: 10, right: 10),
+                        EdgeInsets.only(top: 10, bottom: 10, left: 14, right: 14),
                         onTap: () {
                           Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) => ViewProfile(userId: user.uId)));
