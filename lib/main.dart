@@ -63,6 +63,10 @@ class SplashPageState extends State<SplashPage> {
   @override
   void initState() {
     super.initState();
+
+    // App Opening Control through Firebase realtime database
+    
+
     logInPageSkip();
   }
 

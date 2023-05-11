@@ -76,18 +76,18 @@ class PhoneNumState extends State<PhoneNum> {
                       verificationFailed: (FirebaseAuthException e) {},
                       codeSent: (String verificationId, int? resendToken) {
                         PhoneNum.verify = verificationId;
-                      },
-                      codeAutoRetrievalTimeout: (String verificationId) {},
-                    );
-
-                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Verification Code has been sent.')));
-
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Verification Code has been sent.')));
 
                         Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
                                         VerifyPhoneNo(phoneNo: phoneNo,)));
+                      },
+                      codeAutoRetrievalTimeout: (String verificationId) {},
+                    );
+
+                            
                       },
                       child: Text(
                         _buttonText,

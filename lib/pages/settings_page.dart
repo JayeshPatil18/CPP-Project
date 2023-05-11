@@ -2,8 +2,10 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../auth_pages/phoneno.dart';
+import '../auth_pages/welcome_page.dart';
 import '../data_models/UserModel.dart';
 import 'package:firebase_storage/firebase_storage.dart%20';
 import 'package:flutter/cupertino.dart';
@@ -103,9 +105,14 @@ class EditProfileState extends State<EditProfile> {
     return username;
   }
   
-  Future<void> _getImageUrl() async {
+  Future<void> _getImageUrl({bool isInputUsername = false}) async {
     try {
-      String username = await _getTokenUsername();
+      String username;
+      if(isInputUsername){
+        username = usernameController.text;
+      }else{
+        username = await _getTokenUsername();
+      }
       Reference ref = storageRef.child(username);
 
       profileUrl = await ref.getDownloadURL();
@@ -123,7 +130,7 @@ class EditProfileState extends State<EditProfile> {
 
   Future _uploadFile(String path) async {
     try {
-      String username = await getTokenUsername();
+      String username = usernameController.text;
       storageRef.child('${username}').putFile(_imageFile!);
     } catch (error) {
       debugPrint(error.toString());
@@ -298,12 +305,27 @@ class EditProfileState extends State<EditProfile> {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                     const SnackBar(
                                         content:
-                                            Text('Profile image updating shortly.')));
+                                            Text('Profile image updating shortly, if changed.')));
                                 _setButtonText("Update Profile");
                                 FocusManager.instance.primaryFocus?.unfocus();
                                 Future.delayed(
-                                    const Duration(seconds: 1), () {
-                                  Navigator.pop(context);
+                                    const Duration(seconds: 2), () async{
+                                  // Navigator.pop(context);
+
+                                  var shardPref =
+                                  await SharedPreferences.getInstance();
+                              shardPref.setBool(
+                                  SplashPageState.KEY_LOGIN, false);
+
+                              Navigator.of(context)
+                                  .popUntil((route) => route.isFirst);
+
+                              Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          WelcomePage()));
+
                                 });
                               } else {
                                 ScaffoldMessenger.of(context).showSnackBar(
@@ -336,7 +358,7 @@ class EditProfileState extends State<EditProfile> {
     int userId = await getTokenId();
     String newUsername = usernameController.text;
     String fullname = nameController.text;
-    await _getImageUrl();
+    await _getImageUrl(isInputUsername: true);
 
     try {
       final url = Uri.parse('$globalApiUrl/users/edit/profile');
@@ -459,12 +481,7 @@ class ChangePhoneNumState extends State<ChangePhoneNum> {
                               codeSent:
                                   (String verificationId, int? resendToken) {
                                 ChangePhoneNum.verify = verificationId;
-                              },
-                              codeAutoRetrievalTimeout:
-                                  (String verificationId) {},
-                            );
-
-                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                                 content:
                                     Text('Verification Code has been sent.')));
 
@@ -479,6 +496,10 @@ class ChangePhoneNumState extends State<ChangePhoneNum> {
                                     Navigator.pop(context);
                                   })
                                 });
+                              },
+                              codeAutoRetrievalTimeout:
+                                  (String verificationId) {},
+                            );                            
                           }
 
                           isClicked = false;
@@ -854,9 +875,9 @@ class VerifyPhoneNoChangeState extends State<VerifyPhoneNoChange> {
                             _fieldSix.text;
 
                         try {
-                          // PhoneAuthCredential credential = PhoneAuthProvider.credential(verificationId: SignUp.verify, smsCode: finalCode);
+                          PhoneAuthCredential credential = PhoneAuthProvider.credential(verificationId: ChangePhoneNum.verify, smsCode: finalCode);
 
-                          // await auth.signInWithCredential(credential);
+                          await auth.signInWithCredential(credential);
 
                           bool isDone =
                               await isPhoneNoUpdated(phoneNo);
