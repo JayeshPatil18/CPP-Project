@@ -96,7 +96,7 @@ class ProfilePageState extends State<ProfilePage> {
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(13))),
                       onPressed: () {
-                        final String url = 'https://www.free-css.com/assets/files/free-css-templates/preview/page274/sync/';
+                        final String url = 'https://play.google.com/store/apps/developer?id=Jayesh+Patil';
 
                         Share.share('Check out our app at $url');
                       },
