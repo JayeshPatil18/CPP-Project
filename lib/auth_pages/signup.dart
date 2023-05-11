@@ -211,12 +211,7 @@ class SignUpState extends State<SignUp>{
                                     codeSent: (String verificationId,
                                         int? resendToken) {
                                       SignUp.verify = verificationId;
-                                    },
-                                    codeAutoRetrievalTimeout: (
-                                        String verificationId) {},
-                                  );
-
-                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      ScaffoldMessenger.of(context).showSnackBar(
                                       SnackBar(content: Text(
                                           'Verification Code has been sent.')));
 
@@ -228,6 +223,12 @@ class SignUpState extends State<SignUp>{
                                                 username: username,
                                                 phoneNo: phoneNo,
                                                 password: password,)));
+                                    },
+                                    codeAutoRetrievalTimeout: (
+                                        String verificationId) {},
+                                  );
+
+                                  
                                 } else if (validCode == 1) {
                                   // invalid credential
                                   _setSignUpText("Sign Up");

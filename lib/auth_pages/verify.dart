@@ -122,9 +122,9 @@ class VerifyUserState extends State<VerifyUser> {
                           finalCode = _fieldOne.text + _fieldTwo.text + _fieldThree.text + _fieldFour.text + _fieldFive.text + _fieldSix.text;
 
                           try{
-                            // PhoneAuthCredential credential = PhoneAuthProvider.credential(verificationId: SignUp.verify, smsCode: finalCode);
+                            PhoneAuthCredential credential = PhoneAuthProvider.credential(verificationId: SignUp.verify, smsCode: finalCode);
 
-                            // await auth.signInWithCredential(credential);
+                            await auth.signInWithCredential(credential);
 
                             createUser();
 
