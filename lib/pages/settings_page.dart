@@ -90,6 +90,8 @@ class EditProfileState extends State<EditProfile> {
   final nameController = TextEditingController();
   final usernameController = TextEditingController();
 
+  String _initUsername = "";
+
   bool isClicked = false;
 
   var _myFormKey = GlobalKey<FormState>();
@@ -100,17 +102,18 @@ class EditProfileState extends State<EditProfile> {
     });
   }
 
-  Future<String>_getTokenUsername() async{
+  Future<String> _getTokenUsername() async {
     String username = await getTokenUsername();
+    _initUsername = username;
     return username;
   }
-  
+
   Future<void> _getImageUrl({bool isInputUsername = false}) async {
     try {
       String username;
-      if(isInputUsername){
+      if (isInputUsername) {
         username = usernameController.text;
-      }else{
+      } else {
         username = await _getTokenUsername();
       }
       Reference ref = storageRef.child(username);
@@ -304,28 +307,30 @@ class EditProfileState extends State<EditProfile> {
                                 _setButtonText("Updated!");
                                 ScaffoldMessenger.of(context).showSnackBar(
                                     const SnackBar(
-                                        content:
-                                            Text('Profile image updating shortly, if changed.')));
+                                        content: Text(
+                                            'Profile image updating shortly, if changed.')));
                                 _setButtonText("Update Profile");
                                 FocusManager.instance.primaryFocus?.unfocus();
-                                Future.delayed(
-                                    const Duration(seconds: 2), () async{
-                                  // Navigator.pop(context);
+                                Future.delayed(const Duration(seconds: 2),
+                                    () async {
+                                  if (_initUsername ==
+                                      usernameController.text) {
+                                    Navigator.pop(context);
+                                  } else {
+                                    var shardPref =
+                                        await SharedPreferences.getInstance();
+                                    shardPref.setBool(
+                                        SplashPageState.KEY_LOGIN, false);
 
-                                  var shardPref =
-                                  await SharedPreferences.getInstance();
-                              shardPref.setBool(
-                                  SplashPageState.KEY_LOGIN, false);
+                                    Navigator.of(context)
+                                        .popUntil((route) => route.isFirst);
 
-                              Navigator.of(context)
-                                  .popUntil((route) => route.isFirst);
-
-                              Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          WelcomePage()));
-
+                                    Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                WelcomePage()));
+                                  }
                                 });
                               } else {
                                 ScaffoldMessenger.of(context).showSnackBar(
@@ -421,6 +426,11 @@ class ChangePhoneNumState extends State<ChangePhoneNum> {
     });
   }
 
+  Future<String> _getTokenUsername() async {
+    String username = await getTokenUsername();
+    return username;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -472,34 +482,57 @@ class ChangePhoneNumState extends State<ChangePhoneNum> {
                           if (isValid) {
                             _setButtonText("Loading...");
 
-                            // Verification Code sending
-                            await FirebaseAuth.instance.verifyPhoneNumber(
-                              phoneNumber: phoneNo,
-                              verificationCompleted:
-                                  (PhoneAuthCredential credential) {},
-                              verificationFailed: (FirebaseAuthException e) {},
-                              codeSent:
-                                  (String verificationId, int? resendToken) {
-                                ChangePhoneNum.verify = verificationId;
-                                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                                content:
-                                    Text('Verification Code has been sent.')));
+                            String username = await _getTokenUsername();
+                            int validCode = await validDataCheck(username, phoneNo);
+                            if (validCode == 200) {
+                              // Verification Code sending
+                              await FirebaseAuth.instance.verifyPhoneNumber(
+                                phoneNumber: phoneNo,
+                                verificationCompleted:
+                                    (PhoneAuthCredential credential) {},
+                                verificationFailed:
+                                    (FirebaseAuthException e) {},
+                                codeSent:
+                                    (String verificationId, int? resendToken) {
+                                  ChangePhoneNum.verify = verificationId;
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                          content: Text(
+                                              'Verification Code has been sent.')));
 
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => VerifyPhoneNoChange(
-                                        phoneNo: phoneNo))).then((value) => {
-                                  FocusManager.instance.primaryFocus?.unfocus(),
-                                  Future.delayed(
-                                      const Duration(milliseconds: 500), () {
-                                    Navigator.pop(context);
-                                  })
-                                });
-                              },
-                              codeAutoRetrievalTimeout:
-                                  (String verificationId) {},
-                            );                            
+                                  Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  VerifyPhoneNoChange(
+                                                      phoneNo: phoneNo)))
+                                      .then((value) => {
+                                            FocusManager.instance.primaryFocus
+                                                ?.unfocus(),
+                                            Future.delayed(
+                                                const Duration(
+                                                    milliseconds: 500), () {
+                                              Navigator.pop(context);
+                                            })
+                                          });
+                                },
+                                codeAutoRetrievalTimeout:
+                                    (String verificationId) {},
+                              );
+                            } else if (validCode == 0) {
+                              // phone no already in use.
+                              _setButtonText("Change");
+                              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                  content: Text(
+                                      "'$phoneNo' is already in use! Try another.")));
+                            } else {
+                              // error
+                              _setButtonText("Change");
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                      content: Text(
+                                          'Something went wrong! Try again.')));
+                            }
                           }
 
                           isClicked = false;
@@ -517,6 +550,30 @@ class ChangePhoneNumState extends State<ChangePhoneNum> {
         ),
       ),
     );
+  }
+
+  Future<int> validDataCheck(String username, String PhoneNo) async {
+    try {
+      final url = Uri.parse('$globalApiUrl/login/checkph');
+      final headers = {'Content-Type': 'application/json'};
+      final body = json.encode({
+        'phoneno': phoneNo,
+      });
+      final response = await http.post(url, headers: headers, body: body);
+
+      if (response.statusCode == 200) {
+        // valid data
+        return 200;
+      } else if (response.statusCode == 404) {
+        // invalid phoneno
+        return 0;
+      } else {
+        // error
+        return -1;
+      }
+    } catch (e) {
+      return -1;
+    }
   }
 }
 
@@ -875,14 +932,25 @@ class VerifyPhoneNoChangeState extends State<VerifyPhoneNoChange> {
                             _fieldSix.text;
 
                         try {
-                          PhoneAuthCredential credential = PhoneAuthProvider.credential(verificationId: ChangePhoneNum.verify, smsCode: finalCode);
+                          PhoneAuthCredential credential =
+                              PhoneAuthProvider.credential(
+                                  verificationId: ChangePhoneNum.verify,
+                                  smsCode: finalCode);
 
                           await auth.signInWithCredential(credential);
 
-                          bool isDone =
-                              await isPhoneNoUpdated(phoneNo);
+                          bool isDone = await isPhoneNoUpdated(phoneNo);
 
-                          Navigator.pop(context);
+                          var shardPref = await SharedPreferences.getInstance();
+                          shardPref.setBool(SplashPageState.KEY_LOGIN, false);
+
+                          Navigator.of(context)
+                              .popUntil((route) => route.isFirst);
+
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => WelcomePage()));
                         } catch (e) {
                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                               content: Text('Invalid Verification Code')));

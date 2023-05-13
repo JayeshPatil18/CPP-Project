@@ -4,12 +4,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:stock_prediction/auth_pages/forgot_password.dart';
+import 'package:stock_prediction/auth_pages/phoneno.dart';
 import 'package:stock_prediction/auth_pages/signin.dart';
 import 'package:stock_prediction/auth_pages/signup.dart';
 import 'package:stock_prediction/auth_pages/welcome_page.dart';
 import 'package:stock_prediction/font_helper/default_fonts.dart';
 import 'package:stock_prediction/main.dart';
 import 'package:http/http.dart' as http;
+import 'package:stock_prediction/pages/settings_page.dart';
 
 class VerifyPhoneNo extends StatefulWidget {
 
@@ -111,15 +113,15 @@ class VerifyPhoneNoState extends State<VerifyPhoneNo> {
                           finalCode = _fieldOne.text + _fieldTwo.text + _fieldThree.text + _fieldFour.text + _fieldFive.text + _fieldSix.text;
 
                           try{
-                            // PhoneAuthCredential credential = PhoneAuthProvider.credential(verificationId: SignUp.verify, smsCode: finalCode);
+                            PhoneAuthCredential credential = PhoneAuthProvider.credential(verificationId: PhoneNum.verify, smsCode: finalCode);
 
-                            // await auth.signInWithCredential(credential);
+                            await auth.signInWithCredential(credential);
 
                             Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
-                                        ForgotPassword(phoneNo: phoneNo,)));
+                                        SignIn()));
 
                           }catch(e){
                             ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Invalid Verification Code')));

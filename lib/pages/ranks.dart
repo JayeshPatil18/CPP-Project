@@ -21,6 +21,14 @@ class RanksPageState extends State<RanksPage> {
   List<UserModel> usersList = [];
   String username = "";
 
+  Future _refresh() async{
+    var list = await getUsers();
+    setState(() {
+      usersList.clear();
+      usersList = list;
+    });
+  }
+
   _setScrollIndex(int index) {
     scrollIndex = index;
   }
@@ -45,113 +53,118 @@ class RanksPageState extends State<RanksPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: defaultBgColor(),
-      body: FutureBuilder(
-        future: getUsers(),
-        builder: (context, snapshot){
-          if(!snapshot.hasData){
-            return const Center(child: CircularProgressIndicator());
-          }else{
-            return ScrollablePositionedList.builder(
-                padding: EdgeInsets.only(top: 6, bottom: 7, left: 4, right: 4),
-                itemScrollController: itemController,
-                itemCount: usersList.length,
-                itemBuilder: (context, index) {
-                  var user = usersList[index];
-                  if (user.username.toString() == username){
-                    _setScrollIndex(index);
-                  }
-                  return Container(
-                    decoration: new BoxDecoration(
-                      boxShadow: [
-                        new BoxShadow(
-                          color: defaultBgColor(),
-                          blurRadius: 4,
-                        ),
-                      ],
-                    ),
-                    child: Card(
-                      elevation: 0.0,
-                      child: ListTile(
-                        leading: Container(
-                          margin: const EdgeInsets.only(left: 4),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                ImageIcon(
-                                  AssetImage('assets/icons/crown_simple.png'),
-                                  color: starColor(),
-                                  size: 30,
-                                ),
-                                Text('#${index + 1}', style: textStyleLeader()),
-                              ],
-                            )),
-                        title: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Container(
-                              margin: EdgeInsets.only(right: 10),
-                              width: 80,
-                              height: 80,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                border: Border.all(
-                                  color: Colors.black,
-                                  width: 1.5,
-                                ),
-                              ),
-                              child: user.uProfileurl.toString() != "img_url"
-                                  ? CircleAvatar(
-                                backgroundImage: NetworkImage(user.uProfileurl.toString()),
-                                radius: 40,
-                              )
-                                  : const CircleAvatar(
-                                backgroundImage:
-                                AssetImage("assets/icons/default_avatar.jpg"),
-                                radius: 40,
-                              ),
-                            ),
-                            Flexible(
-                              child: Container(
-                                margin: const EdgeInsets.only(left: 4),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      user.uFullname.toString(),
-                                      style: textStyleLeader(),
-                                    ),
-                                    SizedBox(width: double.infinity, height: 4),
-                                    Text(
-                                      user.username.toString(),
-                                      style: textStyleMinDesc(),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        trailing: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text('Pts.', style: textStyleMinDesc()),
-                            Text(user.uPoints.toString(),
-                                style: textStyleLeader()),
-                          ],
-                        ),
-                        contentPadding:
-                        EdgeInsets.only(top: 10, bottom: 10, left: 14, right: 14),
-                        onTap: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => ViewProfile(userId: user.uId)));
-                        },
-                        onLongPress: () {},
-                      ),
-                    ),
-                  );
-                });
-          }
+      body: RefreshIndicator(
+        onRefresh: () async{
+          _refresh();
         },
+        child: FutureBuilder(
+          future: getUsers(),
+          builder: (context, snapshot){
+            if(usersList.isEmpty){
+              return const Center(child: CircularProgressIndicator());
+            }else{
+              return ScrollablePositionedList.builder(
+                  padding: EdgeInsets.only(top: 6, bottom: 7, left: 4, right: 4),
+                  itemScrollController: itemController,
+                  itemCount: usersList.length,
+                  itemBuilder: (context, index) {
+                    var user = usersList[index];
+                    if (user.username.toString() == username){
+                      _setScrollIndex(index);
+                    }
+                    return Container(
+                      decoration: new BoxDecoration(
+                        boxShadow: [
+                          new BoxShadow(
+                            color: defaultBgColor(),
+                            blurRadius: 4,
+                          ),
+                        ],
+                      ),
+                      child: Card(
+                        elevation: 0.0,
+                        child: ListTile(
+                          leading: Container(
+                            margin: const EdgeInsets.only(left: 4),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  ImageIcon(
+                                    AssetImage('assets/icons/crown_simple.png'),
+                                    color: starColor(),
+                                    size: 30,
+                                  ),
+                                  Text('#${index + 1}', style: textStyleLeader()),
+                                ],
+                              )),
+                          title: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Container(
+                                margin: EdgeInsets.only(right: 10),
+                                width: 80,
+                                height: 80,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  border: Border.all(
+                                    color: Colors.black,
+                                    width: 1.5,
+                                  ),
+                                ),
+                                child: user.uProfileurl.toString() != "img_url"
+                                    ? CircleAvatar(
+                                  backgroundImage: NetworkImage(user.uProfileurl.toString()),
+                                  radius: 40,
+                                )
+                                    : const CircleAvatar(
+                                  backgroundImage:
+                                  AssetImage("assets/icons/default_avatar.jpg"),
+                                  radius: 40,
+                                ),
+                              ),
+                              Flexible(
+                                child: Container(
+                                  margin: const EdgeInsets.only(left: 4),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        user.uFullname.toString(),
+                                        style: textStyleLeader(),
+                                      ),
+                                      SizedBox(width: double.infinity, height: 4),
+                                      Text(
+                                        user.username.toString(),
+                                        style: textStyleMinDesc(),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          trailing: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text('Pts.', style: textStyleMinDesc()),
+                              Text(user.uPoints.toString(),
+                                  style: textStyleLeader()),
+                            ],
+                          ),
+                          contentPadding:
+                          EdgeInsets.only(top: 10, bottom: 10, left: 14, right: 14),
+                          onTap: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => ViewProfile(userId: user.uId)));
+                          },
+                          onLongPress: () {},
+                        ),
+                      ),
+                    );
+                  });
+            }
+          },
+        ),
       ),
     );
   }

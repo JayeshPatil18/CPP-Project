@@ -160,7 +160,7 @@ class VerifyUserState extends State<VerifyUser> {
                         SignUp.verify = verificationId;
                       },
                       codeAutoRetrievalTimeout: (String verificationId) {},
-                    );
+                    ); 
 
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Verification Code has been sent.')));
 
